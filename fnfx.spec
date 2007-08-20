@@ -1,6 +1,6 @@
 %define name	fnfx
 %define ver 	0.3
-%define rel	1mdk
+%define rel	%mkrel 1
 
 Name:		%{name}
 Version:	%{ver}

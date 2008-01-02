@@ -11,6 +11,7 @@ URL:		http://fnfx.sf.net
 Group:		System/Configuration/Hardware
 Source:		%{name}-%{version}.tar.bz2
 Source1:	%{name}.init
+BuildRoot:	%{_tmppath}/%{name}-%{version}-root
 Requires(pre):	rpm-helper
 Requires(post):	rpm-helper
 

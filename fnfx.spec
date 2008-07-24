@@ -1,6 +1,6 @@
 %define name	fnfx
 %define ver 	0.3
-%define rel	%mkrel 2
+%define rel	%mkrel 4
 
 Name:		%{name}
 Version:	%{ver}

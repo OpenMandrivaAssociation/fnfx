@@ -58,3 +58,39 @@ rm -Rf %{buildroot}
 
 %doc ChangeLog INSTALL AUTHORS README
 
+
+
+%changelog
+* Thu Dec 09 2010 Oden Eriksson <oeriksson@mandriva.com> 0.3-6mdv2011.0
++ Revision: 618310
+- the mass rebuild of 2010.0 packages
+
+* Thu Sep 03 2009 Thierry Vignaud <tv@mandriva.org> 0.3-5mdv2010.0
++ Revision: 428824
+- rebuild
+
+* Thu Jul 24 2008 Thierry Vignaud <tv@mandriva.org> 0.3-4mdv2009.0
++ Revision: 245245
+- rebuild
+
+* Wed Jan 02 2008 Olivier Blin <oblin@mandriva.com> 0.3-2mdv2008.1
++ Revision: 140730
+- restore BuildRoot
+
+  + Thierry Vignaud <tv@mandriva.org>
+    - kill re-definition of %%buildroot on Pixel's request
+
+* Thu Aug 23 2007 Thierry Vignaud <tv@mandriva.org> 0.3-2mdv2008.0
++ Revision: 70235
+- use %%mkrel
+
+
+* Thu Nov 25 2004 Buchan Milne <bgmilne@linux-mandrake.com> 0.3-1mdk
+- 0.3
+
+* Mon Mar 01 2004 Buchan Milne <bgmilne@linux-mandrake.com> 0.2-2mdk
+- fix typo in init script
+
+* Tue Jan 13 2004 Buchan Milne <bgmilne@linux-mandrake.com> 0.2-1mdk
+- First Mandrake package
+

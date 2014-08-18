@@ -1,0 +1,10 @@
+[Unit]
+Description=Toshiba function key daemon (fnfxd)
+
+[Service]
+Type=forking
+ExecStartPre=/usr/sbin/fnfxd_check
+ExecStart=/usr/sbin/fnfxd
+
+[Install]
+WantedBy=multi-user.target   

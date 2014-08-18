@@ -1,19 +1,18 @@
-%define name	fnfx
-%define ver 	0.3
-%define rel	%mkrel 6
-
-Name:		%{name}
-Version:	%{ver}
-Release:	%{rel}
+Name:		fnfx
+Version:	0.3
+Release:	7
 Summary:	Toshiba laptop function key utility
 License:	GPL
 URL:		http://fnfx.sf.net
 Group:		System/Configuration/Hardware
-Source:		%{name}-%{version}.tar.bz2
-Source1:	%{name}.init
-BuildRoot:	%{_tmppath}/%{name}-%{version}-root
+Source0:	downloads.sourceforge.net/project/fnfx/fnfx/fnfx%20v0.3/fnfx-0.3.tar.gz
+Source1:	%{name}.service
+Source2:	fnfxd_check.sh
 Requires(pre):	rpm-helper
 Requires(post):	rpm-helper
+Requires(post): systemd-units
+Requires(preun): systemd-units
+Requires(postun): systemd-units
 
 %description
 FnFX enables owners of Toshiba laptops to change the LCD brightness,
@@ -33,64 +32,38 @@ Toshiba support (CONFIG_ACPI and CONFIG_ACPI_TOSHIBA).
 %make
 
 %install
-rm -Rf %{buildroot}
 %makeinstall_std
 
-mkdir -p %{buildroot}/%{_initrddir}
-install %{SOURCE1} %{buildroot}/%{_initrddir}/%{name}
+install -D -m0644 %{SOURCE1} %{buildroot}%{_unitdir}/%{name}.service
+install -D -m0755 %{SOURCE2} %{buildroot}%{_sbindir}/fnfxd_check
 
 %clean
-rm -Rf %{buildroot}
 
 %post
-%_post_service %{name}
+if [ $1 -eq 1 ] ; then 
+    # Initial installation 
+    /bin/systemctl daemon-reload >/dev/null 2>&1 || :
+fi
 
 %preun
-%_preun_service %{name}
+if [ $1 -eq 0 ] ; then
+    # Package removal, not upgrade
+    /bin/systemctl --no-reload disable %{name}.service > /dev/null 2>&1 || :
+    /bin/systemctl stop %{name}.service > /dev/null 2>&1 || :
+fi
+
+%postun
+/bin/systemctl daemon-reload >/dev/null 2>&1 || :
+if [ $1 -ge 1 ] ; then
+    # Package upgrade, not uninstall
+    /bin/systemctl try-restart %{name}.service >/dev/null 2>&1 || :
+fi
 
 %files
-%defattr(-,root,root)
 %{_bindir}/%{name}
 %{_sbindir}/*
 %dir %{_sysconfdir}/%{name}
 %config(noreplace) %{_sysconfdir}/%{name}/*
-%config(noreplace) %{_initrddir}/%{name}
+%{_unitdir}/%{name}.service
 
 %doc ChangeLog INSTALL AUTHORS README
-
-
-
-%changelog
-* Thu Dec 09 2010 Oden Eriksson <oeriksson@mandriva.com> 0.3-6mdv2011.0
-+ Revision: 618310
-- the mass rebuild of 2010.0 packages
-
-* Thu Sep 03 2009 Thierry Vignaud <tv@mandriva.org> 0.3-5mdv2010.0
-+ Revision: 428824
-- rebuild
-
-* Thu Jul 24 2008 Thierry Vignaud <tv@mandriva.org> 0.3-4mdv2009.0
-+ Revision: 245245
-- rebuild
-
-* Wed Jan 02 2008 Olivier Blin <oblin@mandriva.com> 0.3-2mdv2008.1
-+ Revision: 140730
-- restore BuildRoot
-
-  + Thierry Vignaud <tv@mandriva.org>
-    - kill re-definition of %%buildroot on Pixel's request
-
-* Thu Aug 23 2007 Thierry Vignaud <tv@mandriva.org> 0.3-2mdv2008.0
-+ Revision: 70235
-- use %%mkrel
-
-
-* Thu Nov 25 2004 Buchan Milne <bgmilne@linux-mandrake.com> 0.3-1mdk
-- 0.3
-
-* Mon Mar 01 2004 Buchan Milne <bgmilne@linux-mandrake.com> 0.2-2mdk
-- fix typo in init script
-
-* Tue Jan 13 2004 Buchan Milne <bgmilne@linux-mandrake.com> 0.2-1mdk
-- First Mandrake package
-

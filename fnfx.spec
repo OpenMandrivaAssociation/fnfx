@@ -5,7 +5,7 @@ Summary:	Toshiba laptop function key utility
 License:	GPL
 URL:		http://fnfx.sf.net
 Group:		System/Configuration/Hardware
-Source0:	downloads.sourceforge.net/project/fnfx/fnfx/fnfx%20v0.3/fnfx-0.3.tar.gz
+Source0:	downloads.sourceforge.net/project/fnfx/fnfx/fnfx%20v0.3/fnfx-0.3.tar.bz2
 Source1:	%{name}.service
 Source2:	fnfxd_check.sh
 Requires(pre):	rpm-helper

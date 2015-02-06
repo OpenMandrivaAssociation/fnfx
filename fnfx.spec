@@ -1,6 +1,6 @@
 Name:		fnfx
 Version:	0.3
-Release:	7
+Release:	8
 Summary:	Toshiba laptop function key utility
 License:	GPL
 URL:		http://fnfx.sf.net
